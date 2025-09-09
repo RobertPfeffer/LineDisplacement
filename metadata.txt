@@ -26,9 +26,9 @@ icon=icon.png
 homepage=https://robert-pfeffer.net/karten/englisch/nuetzliches.html#Linienverdraengung
 homepage[de]=https://robert-pfeffer.net/karten/nuetzliches.html#Linienverdraengung
 
-repository=https://robert-pfeffer.net/karten/LineDisplacement.zip
+repository=https://github.com/RobertPfeffer/LineDisplacement
 
-tracker=https://robert-pfeffer.net/angaben.html
+tracker=https://github.com/RobertPfeffer/LineDisplacement/issues
 
 experimental=True
 
