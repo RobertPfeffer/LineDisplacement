@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+		<meta charset="utf-8">
+		<title>Kartografische Linienverdrängung – Hilfe</title>
+		<style>
+			/* Schlichtes, QTextBrowser-freundliches Styling */
+			body { font-family: "Segoe UI", Arial, sans-serif; font-size: 12px; line-height: 1.15; margin: 10px; }
+			h2, h3 { margin: 10px 0 6px; }
+			h2 { font-size: 16px; margin-bottom: 16px; }
+			h3 { font-size: 14px; }
+			p		{ margin: 6px 0; }
+			.small { color:#666; }
+			img { max-width: 100%; height: auto; }
+		</style>
+</head>
+<body>
+		<h2>Kartografische Linienverdrängung</h2>
+		
+		<p align="center"><img src="image.png"/></p>
+		
+		<p>Dieses Plugin ermöglicht kartografische Linienverdrängung (z. B. dort, wo in kleinen Maßstäben eine Straße zu nahe an eine Autobahn, eine Küste etc. gerät). Es bewirkt, dass die zu verdrängende Linie der bleibenden Linie nicht näher kommen kann als bis zum Rand eines Puffers um die bleibende Linie. Wo sie ihr eigentlich näher käme, verläuft sie stattdessen am Pufferrand.</p>
+
+		<p>Die verdrängte Geometrie wird grundsätzlich geschrieben. Dynamische Linienverdrängung ist begrenzt möglich.</p>
+
+		<h3>Bleibende Geometrie / Zu verdrängende Geometrie</h3>
+		<p>Die Ebenenauswahl ist selbsterklärend.</p>
+
+		<h3>Vor-Verarbeitung</h3>
+		<p>Wenn Ihre Ausgangsgeometrie per Geometriegenerator dynamisch vereinfacht oder geglättet wird, können Sie versuchen, dies hier nachzubilden, damit die neu generierte, verdrängte Geometrie dazu passt. Genauer gelingt dies ggf. später im Geometriegenerator der verdrängten Geometrie (zu dieser Möglichkeit s. unten bei <i>Symbolebene hinterlassen   …</i>).</p>
+		<p>Belässt man die Werte fürs <i>Glätten</i> auf null, verwendet QGIS Standardwerte.</p>
+
+		<h3>Verdrängungs-Parameter</h3>
+		<p><i>Verdrängungs-Abstand</i> ist der Radius des Puffers, der um die bleibende Geometrie gezogen wird.</p>
+		<p><i>Mindestlänge verdrängter Strecken</i> erlaubt es der verdrängten Geometrie, mit ganz kurzen Strecken doch in den Puffer einzudringen, was manchmal zu besseren Ergebnissen führt.</p>
+
+		<h3>Ziel-Ebene</h3>
+		<p>Standardmäßig wird die verdrängte Geometrie in eine temporäre Ebene geschrieben, deren KBS Sie hier bestimmen können.</p>
+		<p>Lassen Sie stattdessen in eine vorhandene Ebene schreiben, wird deren bisherige Geometrie überschrieben, wenn Sie nicht <i>neue Geometrie anhängen</i> wählen.</p>
+
+		<h3>Zu verdrängende Geometrie: Fragmente verknüpfen</h3>
+		<p>Ist das Liniennetz der zu verdrängenden Geometrie stark fragmentiert, sollte es vorher zu durchgängigen Linien verknüpft werden, weil sonst Lücken entstehen, wo kleine Fragmente gänzlich im Puffer liegen.</p>
+		<ul>
+			<li><i>vorab an Kreuzungen zerlegen:</i> Verbindungen an Kreuzungen werden vorab aufgelöst, um sie anschließend möglichst geradlinig verknüpfen zu können.</li>
+			<li><i>ungerade Kreuzungen nicht verknüpfen:</i> Endpunkte an Kreuzungen, bei denen eine ungerade Anzahl Linien eintrifft, werden bewusst nicht (mehr) verknüpft, um bei späterer Vereinfachung Fehler zu vermeiden.</li>
+			<li><i>max. Winkelabweichung:</i> Bis zu welchem Abknicken an einem Treffpunkt zwei Linien noch verknüpft werden.</li>
+			<li><i>vereinfachende Betrachtung:</i> Temporäre Vereinfachung des Netzes vor Betrachtung der Winkel, um willkürliche Ergebnisse wegen örtlicher Zacken zu vermeiden.</li>
+		</ul>
+		<p>Eine Neuverknüpfung <i>nach</i> der Verdrängung kann das Ergebnis verbessern.</p>
+		<p>Insgesamt bedienen Sie mit diesen Einstellungen das Skript <i>Netzfragmente geradeaus verknüpfen (iterativ)</i>, welches Sie auch separat in den Verarbeitungswerkzeugen finden, falls Sie unten <i>Symbolebene hinterlassen  …</i> gewählt haben.</p>
+
+		<h3>Fortgeschrittene Optionen</h3>
+		<p>Die Debug-Stufen stammen aus der Entwicklung des Plugins und können bei der Fehlersuche helfen.</p>
+		<ul>
+			<li><i>final:</i> Endergebnis, welches in die Attributtabelle geschrieben wird.</li>
+			<li><i>pre_final:</i> wie <i>final,</i> nur ohne Schreiben (ermöglicht theoretisch eine dynamische Linienverdrängung per Geometriegenerator, die sich aber wohl nur für sehr simple Geometrie eignen dürfte)</li>
+			<li>Alle weiteren Stufen zeigen Zwischenergebnisse an, die ebenfalls nicht geschrieben werden.</li>
+		</ul>
+
+		<p><b><i>Symbolebene hinterlassen  …</i></b> könnte eine der wichtigsten Optionen dieses Plugins sein. Denn das Plugin ist lediglich eine grafische Benutzeroberfläche für die Funktion <i>line_displacement,</i> die über einen Ausdruck im Geometriegenerator aufgerufen wird. Das Plugin baut diesen Ausdruck und startet den Geometriegenerator. Die hierfür angelegte Symbolebene beizubehalten, hat mehrere Vorteile:</p>
+		<ul>
+			<li>Sie benötigen künftig kein Plugin mehr.</li>
+			<li>Die verwendeten Parameter bleiben im Ausdrucksfeld der Symbolebene gespeichert und können bei Bedarf geändert werden, um die verdrängte Geometrie neu zu generieren.</li>
+			<li>Eine dynamische Vereinfachung oder Glättung Ihrer Ausgangsgeometrie durch deren Geometriegenerator können Sie im Ausdrucksfeld dieses Geometriegenerators u. U. genauer nachbilden als mit der <i>Vor-Verarbeitung</i> im Plugin.</li>
+			<li>Bei sehr simpler Geometrie könnte mit der Debug-Stufe <i>pre_final</i> eine dynamische Linienverdrängung gelingen.</li>
+		</ul>
+		<p>Die Funktion <i>line_displacement</i> wird nur aktiv, wenn die Symbolebene sichtbar und die ganze Ebene sicht- und bearbeitbar ist (Ausnahme: <i>pre_final</i> erfordert nur Sichtbarkeit, um dynamische		Linienverdrängung zu ermögilchen). Zur manuellen Ausführung empfiehlt sich folgende Reichenfolge:<p/>
+		<ol>
+			<li>Symbolebene einschalten,</li>
+			<li>Ebene unsichtbar schalten,</li>
+			<li>Ebene bearbeitbar schalten,</li>
+			<li>Ebene wieder sichtbar schalten,</li>
+			<li>warten, bis Geometrie generiert wurde, und</li>
+			<li>Bearbeitbarkeit wieder abschalten.</li>
+		</ol>
+		<p>Wählen Sie <i>Symbolebene hinterlassen …,</i> so bleibt die Funktion <i>line_displacement</i> (Linienverdraengung.py) im Funktionseditor des Geometriegenerators verfügbar, und das Skript <i>Netzfragmente geradeaus verknüpfen (iterativ)</i> (Netzfragmente_verknuepfen.py) verbleibt in der Rubrik Netzbereinigung bei den Verarbeitungswerkzeugen.<p/>
+		<p>Schlussendlich können Sie eine <i>Logdatei auf dem Desktop ablegen,</i> z. B. zur Fehlersuche.</p>
+		
+		<p style="text-align: center;" class="small">Entwickelt von Robert Pfeffer, Hessen<br>(mit freundlicher Unterstützung von ChatGPT)</p>
+		<p style="text-align: center;" class="small">Lizenz: GPL 3.0</p>
+		<p style="text-align: center;" class="small"><a href="https://robert-pfeffer.net/karten/nuetzliches.html#Linienverdraengung" target="_blank">robert-pfeffer.net/karten</a></p>
+
+</body>
+</html>

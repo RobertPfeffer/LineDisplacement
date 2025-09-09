@@ -1,0 +1,35 @@
+[general]
+name=Line Displacement
+name[de]=Linienverdrängung
+
+qgisMinimumVersion=3.30
+
+version=1.0
+
+author=Robert Pfeffer
+
+email=Kontakt@Robert-Pfeffer.net
+
+description=Plugin for cartographic line displacement
+description[de]=Plugin für kartografische Linienverdrängung
+
+about=<p>This plugin ensures that a line to be displaced cannot come closer to the remaining line than the edge of a buffer around the remaining line. Where it would actually come closer, it will instead run along the edge of the buffer.</p><p>The displaced geometry is generally written. Dynamic line displacement is possible to a limited extent.
+about[de]=<p>Dieses Plugin bewirkt, dass eine zu verdrängende Linie der bleibenden Linie nicht näher kommen kann als bis zum Rand eines Puffers um die bleibende Linie. Wo sie ihr eigentlich näher käme, verläuft sie stattdessen am Pufferrand.</p><p>Die verdrängte Geometrie wird grundsätzlich geschrieben. Dynamische Linienverdrängung ist begrenzt möglich.</p>
+
+category=Vector
+category[de]=Vektor
+
+license=GPL-3.0
+
+icon=icon.png
+
+homepage=https://robert-pfeffer.net/karten/englisch/nuetzliches.html#Linienverdraengung
+homepage[de]=https://robert-pfeffer.net/karten/nuetzliches.html#Linienverdraengung
+
+repository=https://robert-pfeffer.net/karten/LineDisplacement.zip
+
+tracker=https://robert-pfeffer.net/angaben.html
+
+experimental=True
+
+deprecated=False

@@ -1,0 +1,7 @@
+# generiert/unerwünscht
+.htaccess
+__pycache__/
+*.log
+*.zip
+.DS_Store
+Thumbs.db

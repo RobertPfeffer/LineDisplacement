@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="utf-8">
+		<title>Cartographic Line Displacement – Help</title>
+		<style>
+			/* Plain styling, QTextBrowser-friendly */
+			body { font-family: "Segoe UI", Arial, sans-serif; font-size: 12px; line-height: 1.15; margin: 10px; }
+			h2, h3 { margin: 10px 0 6px; }
+			h2 { font-size: 16px; margin-bottom: 16px; }
+			h3 { font-size: 14px; }
+			p		{ margin: 6px 0; }
+			.small { color:#666; }
+			img { max-width: 100%; height: auto; }
+		</style>
+</head>
+<body>
+		<h2>Cartographic Line Displacement</h2>
+		
+		<p align="center"><img src="image.png"/></p>
+		
+		<p>This plugin enables cartographic line displacement (e.g. where, at small scales, a road comes too close to a motorway, a coastline, etc.). It ensures that the line to be displaced cannot come closer to the fixed line than the edge of a buffer around the fixed line. Where it would actually come closer, it will instead run along the buffer edge.</p>
+
+		<p>The displaced geometry is generally written. Dynamic line displacement is possible to a limited extent.</p>
+
+		<h3>Fixed geometry / Geometry to be displaced</h3>
+		<p>The layer selection is self-explanatory.</p>
+
+		<h3>Pre-processing</h3>
+		<p>If your source geometry is dynamically simplified or smoothed via a geometry generator, you can try to reproduce this here so that the newly generated, displaced geometry matches. More precise results may later be achieved in the geometry generator of the displaced geometry itself (see below at <i>Leave symbol layer …</i>).</p>
+		<p>If you leave the values for <i>Smoothing</i> at zero, QGIS uses default values.</p>
+
+		<h3>Displacement parameters</h3>
+		<p><i>Displacement distance</i> is the radius of the buffer drawn around the fixed geometry.</p>
+		<p><i>Minimum length of displaced segments</i> allows the displaced geometry to intrude into the buffer with very short segments, which sometimes produces better results.</p>
+
+		<h3>Target layer</h3>
+		<p>By default the displaced geometry is written to a temporary layer, whose CRS you can set here.</p>
+		<p>If instead you write to an existing layer, its current geometry will be overwritten unless you choose <i>append new geometry</i>.</p>
+
+		<h3>Geometry to be displaced: connect fragments</h3>
+		<p>If the line network of the geometry to be displaced is highly fragmented, it should first be connected into continuous lines, otherwise gaps will occur where small fragments lie entirely within the buffer.</p>
+		<ul>
+			<li><i>Initially split at intersections:</i> connections at intersections are first dissolved in order to reconnect them afterwards in as straight a manner as possible.</li>
+			<li><i>Don’t connect uneven intersections:</i> endpoints at intersections where an uneven number of lines meet are deliberately not connected, to avoid errors during later simplification.</li>
+			<li><i>Max. angle deviation:</i> up to what deflection at a junction two lines are still to be connected.</li>
+			<li><i>Simplified representation:</i> temporary simplification of the network before evaluating the angles, to avoid arbitrary results due to local zigzags.</li>
+		</ul>
+		<p>A reconnection <i>after</i> displacement can improve the result.</p>
+		<p>With these settings you are controlling the script <i>Connect network fragments straight (iterative)</i>, which you can also find separately in the Processing toolbox if you have chosen <i>Leave symbol layer …</i> below.</p>
+
+		<h3>Advanced options</h3>
+		<p>The debug levels stem from the development of the plugin and can help in troubleshooting.</p>
+		<ul>
+			<li><i>final:</i> final result, which is written to the attribute table.</li>
+			<li><i>pre_final:</i> like <i>final</i>, only without writing (theoretically allows a dynamic line displacement via geometry generator, which, however, will probably only be suitable for very simple geometry)</li>
+			<li>All other levels show intermediate results, which are likewise not written.</li>
+		</ul>
+
+		<p><b><i>Leave symbol layer …</i></b> could be one of the most important options of this plugin. The plugin is merely a graphical user interface for the function <i>line_displacement,</i> which is called via an expression in the geometry generator. The plugin builds this expression and starts the geometry generator. Keeping the symbol layer created for this purpose has several advantages:</p>
+		<ul>
+			<li>You will no longer need a plugin in future.</li>
+			<li>The parameters used remain stored in the expression field of the symbol layer and can be modified if necessary to regenerate the displaced geometry.</li>
+			<li>A dynamic simplification or smoothing of your source geometry by its geometry generator can, in some cases, be reproduced more precisely in the expression field of this geometry generator than with the <i>Pre-processing</i> inside the plugin.</li>
+			<li>With very simple geometry, the debug level <i>pre_final</i> may permit a dynamic line displacement.</li>
+		</ul>
+		<p>The function <i>line_displacement</i> becomes active only if the symbol layer is visible and the entire layer is visible and editable (Exception: <i>pre_final</i> only requires visibility to allow dynamic line displacement). For manual execution the following sequence is recommended:<p/>
+		<ol>
+			<li>Switch on the symbol layer,</li>
+			<li>make the layer invisible,</li>
+			<li>make the layer editable,</li>
+			<li>make the layer visible again,</li>
+			<li>wait until the geometry has been generated, and</li>
+			<li>switch off editability again.</li>
+		</ol>
+		<p>If you choose <i>Leave symbol layer …</i>, the function <i>line_displacement</i> (Linienverdraengung.py) remains available in the function editor of the geometry generator, and the script <i>Connect network fragments straight (iterative)</i> (Netzfragmente_verknuepfen.py) remains under Network cleaning in the Processing toolbox.<p/>
+		<p>Finally you can <i>write a log file on the desktop,</i> for example for troubleshooting.</p>
+		
+		<p style="text-align: center;" class="small">Developed by Robert Pfeffer, Hesse<br>(with kind support from ChatGPT)</p>
+		<p style="text-align: center;" class="small">License: GPL 3.0</p>
+		<p style="text-align: center;" class="small"><a href="https://robert-pfeffer.net/karten/englisch/nuetzliches.html#Linienverdraengung" target="_blank">robert-pfeffer.net/karten</a></p>
+
+</body>
+</html>
