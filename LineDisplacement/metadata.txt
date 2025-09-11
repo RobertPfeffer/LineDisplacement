@@ -41,3 +41,10 @@ changelog=
     – minor fixes
   1.0
     initial release
+changelog[de]=
+  1.0.1
+    – nicht mehr experimentell
+    – Standardwerte entfernt
+    – kleinere Korrekturen
+  1.0
+    Erstveröffentlichung
