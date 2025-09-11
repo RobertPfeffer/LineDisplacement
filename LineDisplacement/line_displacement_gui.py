@@ -66,7 +66,7 @@ class LineDisplacementDialog(QtWidgets.QDialog):
             spin_simplify = QtWidgets.QDoubleSpinBox()
             spin_simplify.setDecimals(6)
             spin_simplify.setRange(0.0, 1e9)
-            spin_simplify.setValue(0.05)
+            spin_simplify.setValue(0.0)
             spin_simplify.setEnabled(False)
 
             # Glättung
@@ -165,13 +165,13 @@ class LineDisplacementDialog(QtWidgets.QDialog):
         self.spin_buf = QtWidgets.QDoubleSpinBox()
         self.spin_buf.setDecimals(6)
         self.spin_buf.setRange(0.0, 1e9)
-        self.spin_buf.setValue(0.04)
+        self.spin_buf.setValue(0.0)
         self.spin_buf.setMinimumWidth(70)
 
         self.spin_minlen = QtWidgets.QDoubleSpinBox()
         self.spin_minlen.setDecimals(6)
         self.spin_minlen.setRange(0.0, 1e9)
-        self.spin_minlen.setValue(0.01)
+        self.spin_minlen.setValue(0.0)
         self.spin_minlen.setMinimumWidth(70)
 
         form_disp.addRow(t("Verdrängungs-Abstand:", "Displacement distance:"), self.spin_buf)
@@ -210,16 +210,16 @@ class LineDisplacementDialog(QtWidgets.QDialog):
         self.chk_even_pre   = QtWidgets.QCheckBox(); self.chk_even_post = QtWidgets.QCheckBox()
         _mk_row(t("ungerade Kreuzungen nicht verknüpfen:", "Dont’t connect uneven intersections:"), self.chk_even_pre, self.chk_even_post)
 
-        self.spin_tol_pre  = QtWidgets.QDoubleSpinBox(); self.spin_tol_pre.setDecimals(6); self.spin_tol_pre.setRange(0.0, 1e9); self.spin_tol_pre.setValue(0.01); self.spin_tol_pre.setMinimumWidth(70)
-        self.spin_tol_post = QtWidgets.QDoubleSpinBox(); self.spin_tol_post.setDecimals(6); self.spin_tol_post.setRange(0.0, 1e9); self.spin_tol_post.setValue(0.01); self.spin_tol_post.setMinimumWidth(70)
+        self.spin_tol_pre  = QtWidgets.QDoubleSpinBox(); self.spin_tol_pre.setDecimals(6); self.spin_tol_pre.setRange(0.0, 1e9); self.spin_tol_pre.setValue(0.0); self.spin_tol_pre.setMinimumWidth(70)
+        self.spin_tol_post = QtWidgets.QDoubleSpinBox(); self.spin_tol_post.setDecimals(6); self.spin_tol_post.setRange(0.0, 1e9); self.spin_tol_post.setValue(0.0); self.spin_tol_post.setMinimumWidth(70)
         _mk_row(t("Toleranz gegenüber Löchern:", "Tolerance for holes:"), self.spin_tol_pre, self.spin_tol_post)
 
         self.spin_ang_pre  = QtWidgets.QDoubleSpinBox(); self.spin_ang_pre.setDecimals(3); self.spin_ang_pre.setRange(0.0, 180.0); self.spin_ang_pre.setValue(90.0); self.spin_ang_pre.setMinimumWidth(70)
         self.spin_ang_post = QtWidgets.QDoubleSpinBox(); self.spin_ang_post.setDecimals(3); self.spin_ang_post.setRange(0.0, 180.0); self.spin_ang_post.setValue(90.0); self.spin_ang_post.setMinimumWidth(70)
         _mk_row(t("maximale Winkelabweichung (°):", "Maximum angle deviation (°):"), self.spin_ang_pre, self.spin_ang_post)
 
-        self.spin_simpl_pre  = QtWidgets.QDoubleSpinBox(); self.spin_simpl_pre.setDecimals(6); self.spin_simpl_pre.setRange(0.0, 10.0); self.spin_simpl_pre.setValue(0.3); self.spin_simpl_pre.setMinimumWidth(70)
-        self.spin_simpl_post = QtWidgets.QDoubleSpinBox(); self.spin_simpl_post.setDecimals(6); self.spin_simpl_post.setRange(0.0, 10.0); self.spin_simpl_post.setValue(0.3); self.spin_simpl_post.setMinimumWidth(70)
+        self.spin_simpl_pre  = QtWidgets.QDoubleSpinBox(); self.spin_simpl_pre.setDecimals(6); self.spin_simpl_pre.setRange(0.0, 10.0); self.spin_simpl_pre.setValue(0.0); self.spin_simpl_pre.setMinimumWidth(70)
+        self.spin_simpl_post = QtWidgets.QDoubleSpinBox(); self.spin_simpl_post.setDecimals(6); self.spin_simpl_post.setRange(0.0, 10.0); self.spin_simpl_post.setValue(0.0); self.spin_simpl_post.setMinimumWidth(70)
         _mk_row(t("vereinfachende Betrachtung:", "Simplified assessment:"), self.spin_simpl_pre, self.spin_simpl_post)
 
         self.spin_it_pre  = QtWidgets.QSpinBox(); self.spin_it_pre.setRange(0, 999999); self.spin_it_pre.setValue(10); self.spin_it_pre.setMinimumWidth(70)
