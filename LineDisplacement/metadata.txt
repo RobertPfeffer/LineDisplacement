@@ -4,7 +4,7 @@ name[de]=Linienverdrängung
 
 qgisMinimumVersion=3.30
 
-version=1.0
+version=1.0.1
 
 author=Robert Pfeffer
 
@@ -30,6 +30,14 @@ repository=https://github.com/RobertPfeffer/LineDisplacement
 
 tracker=https://github.com/RobertPfeffer/LineDisplacement/issues
 
-experimental=True
+experimental=False
 
 deprecated=False
+
+changelog=
+  1.0.1
+    – no longer experimental
+	– removed default values
+	– minor fixes
+  1.0
+    initial release
